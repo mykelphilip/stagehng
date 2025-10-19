@@ -120,10 +120,10 @@ Fix: Make sure your controller file exists and matches the namespace:
 app/Http/Controllers/CatController.php
 ```
 
-Then run:
+or run:
 
 ```bash
-composer dump-autoload
+php artisan make::controller CatController
 ```
 
 ---
