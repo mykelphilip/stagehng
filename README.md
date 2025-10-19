@@ -1,95 +1,60 @@
-Stage Zero ( Laravel Cat Fact API )
+🐾 StageZeroHNG – Laravel Cat Fact API
 
 A lightweight Laravel project demonstrating how to consume external APIs, return structured JSON responses, and show developer metadata with timestamps.
-
-> 🔗 Repository: [github.com/mykelphilip/zero](https://github.com/mykelphilip/stagehng)
-
-
-🚀 Features
-
-* Fetches random cat facts from [CatFact Ninja API](https://catfact.ninja/fact)
-* Returns formatted JSON with developer info and UTC timestamp
-* Example of Laravel’s HTTP client in action
-* Simple and educational — perfect for beginners learning API consumption in Laravel
+A simple Laravel API that returns developer info, a random cat fact, and a timestamp.
+📦 Repo: [https://github.com/mykelphilip/stagehng](https://github.com/mykelphilip/stagehng)
 
 
+⚙️ 1️⃣ Prerequisites
 
-🧰 Requirements
+Make sure you have these installed locally (LAMP stack):
 
-| Dependency | Version |
-| ---------- | ------- |
-| PHP        | 8.1+    |
-| Composer   | 2.x     |
-| Laravel    | 10+     |
-| cURL       | Enabled |
-| OpenSSL    | Enabled |
+* Linux / Apache / MySQL / PHP (8.1 or higher)
+* Composer
+* Git
+* Postman (for API testing)
 
 ---
 
-⚙️ Setup Instructions
-1️⃣ Clone the Repository
+🧩 2️⃣ Clone the Project
 
 ```bash
-git clone https://github.com/mykelphilip/zero.git
-cd zero
+git clone https://github.com/mykelphilip/stagehng.git
+cd stagehng
 ```
 
-2️⃣ Install Dependencies
+---
+
+🧩 3️⃣ Install Dependencies
 
 ```bash
 composer install
 ```
 
-3️⃣ Create Environment File
+---
+
+🧩 4️⃣ Setup Environment File
+
+Duplicate the example environment file:
 
 ```bash
 cp .env.example .env
-```
-
-Then generate the app key:
-
-```bash
 php artisan key:generate
 ```
 
-4️⃣ Configure Environment Variables
+> Note: This project does not require a database connection, so you can skip editing DB credentials.
 
-In your `.env` file, ensure these are set:
+---
 
-```env
-APP_NAME=Zero
-APP_ENV=local
-APP_KEY=base64:your_generated_key_here
-APP_DEBUG=true
-APP_URL=http://localhost
+🧩 5️⃣ Serve the Application
 
-LOG_CHANNEL=stack
-LOG_LEVEL=debug
-
-# Database (optional if not used)
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=zero
-DB_USERNAME=root
-DB_PASSWORD=
-
-# HTTP Client (Laravel default uses Guzzle)
-
-
-> ⚠️ If you encounter SSL/TLS issues (like `cURL error 60`), download and configure a CA certificate:
-> [https://curl.se/ca/cacert.pem](https://curl.se/ca/cacert.pem)
-
-
-🧩 Run Locally
-
-Start the local Laravel development server:
+Run the Laravel development server:
 
 ```bash
 php artisan serve
 ```
 
-By default, the app runs at:
+This will start the server at:
 
 ```
 http://127.0.0.1:8000
@@ -97,45 +62,17 @@ http://127.0.0.1:8000
 
 ---
 
-🧠 API Endpoint — `/cat-fact`
+🧩 6️⃣ Test the API Using Postman
 
-📘 Route
+1. Open Postman
+2. Create a GET request:
 
-Add this to your `routes/web.php` or `routes/api.php` if you are building an API as Well:
+   ```
+   http://127.0.0.1:8000/me
+   ```
+3. Hit Send
 
-```php
-use App\Http\Controllers\FactController;
-
-Route::get('/cat-fact', [FactController::class, 'getFact']);
-```
-
-📜 Function Definition
-
-```php
-public function getFact(Request $request)
-{
-    $user = [
-        'name' => 'Michael Philip Funguy',
-        'email' => 'michaelfunguycjnr@gmail.com',
-        'stack' => 'Laravel, PHP, Vue.js, MySQL, Docker, Move',
-    ];
-
-    $response = Http::get('https://catfact.ninja/fact');
-    $response = json_decode($response->body(), true)['fact'];
-    $time = \Carbon\Carbon::now('UTC')->toIso8601String();
-
-    return response()->json([
-        'status' => 'success',
-        'user' => $user,
-        'timestamp' => $time,
-        'fact' => $response
-    ]);
-}
-```
-
-
-RESULT
-📦 JSON Response
+✅ Expected JSON response:
 
 ```json
 {
@@ -143,61 +80,72 @@ RESULT
   "user": {
     "name": "Michael Philip Funguy",
     "email": "michaelfunguycjnr@gmail.com",
-    "stack": "Laravel, PHP, Blade, MySQL, Docker"
+    "stack": "Laravel, PHP, Vue.js, MySQL, Docker"
   },
-  "timestamp": "2025-10-18T18:45:32Z",
+  "timestamp": "2025-10-19T12:00:00Z",
   "fact": "Cats sleep 70% of their lives."
 }
 ```
 
+---
 
-🧩 Dependencies
+🧠 Endpoint Reference
 
-Laravel will automatically install the following packages:
-
-* `laravel/framework`
-* `guzzlehttp/guzzle`
-* `nesbot/carbon`
-* `vlucas/phpdotenv`
-
-To install manually:
-
-```bash
-composer require guzzlehttp/guzzle nesbot/carbon
-```
-
-🔐 Environment Variables Summary
-
-| Variable    | Description                             |
-| ----------- | --------------------------------------- |
-| `APP_ENV`   | Set environment (`local`, `production`) |
-| `APP_KEY`   | Application encryption key              |
-| `APP_DEBUG` | Debug mode (true/false)                 |
-| `APP_URL`   | Base URL of your app                    |
-| `DB_*`      | Database credentials (if applicable)    |
-
-
-🧑‍💻 Author
-
-Michael Philip aka Funguy
-📧 [michaelfunguycjnr@gmail.com](mailto:michaelfunguycjnr@gmail.com)
-💻 Stack: Laravel • PHP • Vue.js • MySQL • Docker • Move
+| Method | Endpoint | Description                                              |
+| ------ | -------- | -------------------------------------------------------- |
+| GET    | `/me`    | Returns developer info, timestamp, and a random cat fact |
 
 ---
 
-⭐ Contribute
+🧰 Troubleshooting
 
-Want to improve the project?
+❌ 1. `php artisan view:cache` or `config:cache` Fails
 
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feature/your-feature`)
-3. Commit and push your changes
-4. Open a pull request
+Fix: Clear all caches before re-running the command.
 
+```bash
+php artisan optimize:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+```
 
+---
 
-🐾 License
+❌ 2. `Class "App\Http\Controllers\CatController" not found`
 
-This project is open-source under the [MIT License](LICENSE).
+Fix: Make sure your controller file exists and matches the namespace:
 
+```
+app/Http/Controllers/CatController.php
+```
+
+Then run:
+
+```bash
+composer dump-autoload
+```
+
+---
+
+❌ 3. SSL or TLS Issues (on local setup)
+
+If your local machine throws `cURL error 60`, disable SSL verification temporarily in your request:
+
+```php
+$response = Http::withoutVerifying()->get('https://catfact.ninja/fact');
+```
+
+(Not recommended for production)
+
+---
+
+❌ 4. Blank Response or Timeout
+
+Make sure your system is connected to the internet —
+the API fetches data from `https://catfact.ninja/fact`.
+
+---
+
+✅ That’s it! you’re fully set up to run and test the StageZeroHNG Laravel API locally!
 
