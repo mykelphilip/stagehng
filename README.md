@@ -68,7 +68,7 @@ http://127.0.0.1:8000
 2. Create a GET request:
 
    ```
-   http://127.0.0.1:8000/me
+   http://127.0.0.1:8000/api/me
    ```
 3. Hit Send
 
@@ -93,7 +93,7 @@ http://127.0.0.1:8000
 
 | Method | Endpoint | Description                                              |
 | ------ | -------- | -------------------------------------------------------- |
-| GET    | `/me`    | Returns developer info, timestamp, and a random cat fact |
+| GET    | `/api/me`    | Returns developer info, timestamp, and a random cat fact |
 
 ---
 
